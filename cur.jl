@@ -13,16 +13,16 @@ function cur(A, nSamples)
   chosenCols = getsamples(colCDF, nSamples)
 
   C = A[:,chosenCols]
-  U = pinv(A[chosenRows,chosenCols])
+  U = pinv(full(A[chosenRows,chosenCols]))
   R = A[chosenRows,:]
   return C,U,R
 end
 
 function getprobabilities(A)
-  nRows = length(A[1,:])
+  nRows = size(A)[1]
   rowPDF = zeros(nRows)
   for i = 1:nRows
-    rowPDF[i,:] = vecnorm(A[i,:])
+    rowPDF[i] = vecnorm(A[i,:])
   end
   rowPDF = rowPDF/vecnorm(A)
   return rowPDF
@@ -40,3 +40,13 @@ function getsamples(cdf, N)
   end
   return samples
 end
+
+print("\ntesting cur(A)\n")
+A = rand(2,3)
+C,U,R = cur(A,2)
+print((C,U,R))
+
+print("\ntesting cur(::sparse S)\n")
+S = sparse(A)
+C,U,R = cur(A,2)
+print((C,U,R))
