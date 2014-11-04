@@ -40,13 +40,3 @@ function getsamples(cdf, N)
   end
   return samples
 end
-
-print("\ntesting cur(A)\n")
-A = rand(2,3)
-C,U,R = cur(A,2)
-print((C,U,R))
-
-print("\ntesting cur(::sparse S)\n")
-S = sparse(A)
-C,U,R = cur(A,2)
-print((C,U,R))
